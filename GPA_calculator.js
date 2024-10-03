@@ -6,8 +6,8 @@ function calculateGPA() {
     target = './GPA_dictionary.json';
     axios.get(target)
         .then(response => {
+            // retrieve data from the dictionary for each uni's grade : gpa 
             // console.log(response.data); 
-
             let inputUni = document.getElementById('university').value;
             let displayMsg = document.getElementById('displayMsg');
             let numSelected = document.getElementById('moduleCount').value;
@@ -19,7 +19,8 @@ function calculateGPA() {
             let textFieldsList = document.querySelectorAll('#moduleInputs input');
 
 
-            // for smu:
+            // for SMU:
+            // SMU's cumulative GPA calculation: sum of GPA of all mods divide by number of mods
             if (inputUni == 'smu') {
                 let sum = 0;
                 var uniDicts = response.data;
@@ -71,7 +72,8 @@ function calculateGPA() {
                 }
 
             }
-            // for other unis ( need to consider credits)
+            // for other unis
+            // other uni's cumulative gpa = sum of (grade point * credit) divide by total credits
             else {
                 let totalGPA = 0;
                 let totalCredits = 0;
@@ -85,18 +87,20 @@ function calculateGPA() {
                 // console.log(uniObj)
                 let i = 0;
                 let j = 1;
+                let m = 0;
                 while (i <= numSelected * 2 && j <= numSelected * 2) {
                     // ensure user's input is valid first (can be found in the dictionary)
                     let gradeEntered = textFieldsList[i].value.trim().toUpperCase();
-                    let creditEntered = parseFloat(textFieldsList[j].value);
+                    let creditEntered = textFieldsList[j].value;
                     if (typeof gradeEntered == "string" && uniObj.hasOwnProperty(gradeEntered)) {
                         let thisGPA = uniObj[gradeEntered];
-                        if (typeof creditEntered == "number" && 0 < creditEntered < 10) {
+                        creditEntered = parseFloat(creditEntered);
+                        if (creditEntered < 10 && creditEntered > 0) {
                             totalCredits += creditEntered;
                             totalGPA += creditEntered * thisGPA;
                         }
                         else {
-                            alert('Please ensure the credit entered for module ' + (parseInt(i) + 1) + " is valid!");
+                            alert('Please ensure the credit entered for module ' + (parseInt(m) + 1) + " is valid! Your credit entered for the mod is either too large or too small!");
                             return;
                         }
                     }
@@ -104,7 +108,7 @@ function calculateGPA() {
                         alert('Please ensure the grade entered for module ' + (parseInt(i) + 1) + " is valid!");
                         return;
                     }
-                    
+                    m ++;
                     i += 2;
                     j += 2;
                 }
@@ -132,6 +136,7 @@ function generateInputFields() {
     if (num_mod > 6) {
         alert("WOW You are crazy taking so many mods within one SEM?!")
     }
+    // end of funny
     var modInputEle = document.getElementById('moduleInputs');
     modInputEle.replaceChildren();
 
@@ -145,6 +150,7 @@ function generateInputFields() {
             let label = document.createElement('label');
             label.textContent = 'Enter grade for module ' + i + ': ';
 
+            // SMU only needs to take account for the number of mods and grade of each mod
             let input = document.createElement('input');
             input.type = 'text';
             input.id = 'grade' + i;
@@ -157,7 +163,6 @@ function generateInputFields() {
             moduleDiv.appendChild(label);
             moduleDiv.appendChild(input);
             modInputEle.appendChild(moduleDiv);
-
             i++;
         }
     }
@@ -181,17 +186,18 @@ function generateInputFields() {
             input1.classList.add('form-control');
             input1.placeholder = 'A+, A, A-, B+, B, etc.';
 
-
+            // beside the grade of each mod, other unis must take consideration of credit worth of each mod
             let label2 = document.createElement('label');
             label2.textContent = 'Enter credit for module ' + i + ': ';
             let input2 = document.createElement('input');
-            input2.type = 'text';
+            input2.type = 'number';
             input2.id = 'credit' + i;
             input2.style.maxWidth = "25%";
             input2.style.display = "inline";
             input2.setAttribute('required', true);
             input2.classList.add('form-control');
             input2.placeholder = '2, 3, 4, etc.';
+            
 
             moduleDiv.appendChild(label1);
             moduleDiv.appendChild(input1);
@@ -206,6 +212,5 @@ function generateInputFields() {
 
 }
 
-
-
+// generate input fields when loaded
 window.onload = generateInputFields;
