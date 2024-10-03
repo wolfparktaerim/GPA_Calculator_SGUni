@@ -158,7 +158,7 @@ function generateInputFields() {
             input.style.display = "inline";
             input.setAttribute('required', true);
             input.classList.add('form-control');
-            input.placeholder = 'A+, A, A-, B+, B, etc.';
+            input.placeholder = 'A+, B, C-, etc.';
 
             moduleDiv.appendChild(label);
             moduleDiv.appendChild(input);
@@ -184,7 +184,7 @@ function generateInputFields() {
             input1.style.display = "inline";
             input1.setAttribute('required', true);
             input1.classList.add('form-control');
-            input1.placeholder = 'A+, A, A-, B+, B, etc.';
+            input1.placeholder = 'A+, B, C-, etc.';
 
             // beside the grade of each mod, other unis must take consideration of credit worth of each mod
             let label2 = document.createElement('label');
