@@ -130,6 +130,8 @@ function calculateGPA() {
 
 // when user select a number k, this function will generate k text fields for user to enter his grades
 function generateInputFields() {
+    let displayMsg = document.getElementById('displayMsg');
+    displayMsg.replaceChildren();
     var schoolSelectd = document.getElementById('university').value;
     var num_mod = document.getElementById('moduleCount').value;
     // just wanna be funny LMAO
