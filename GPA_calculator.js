@@ -56,13 +56,13 @@ function calculateGPA() {
                 displayMsg = document.getElementById('displayMsg');
                 displayMsg.innerText = "Your cumulative GPA is " + cumulativeGPA + " out of 4.00";
                 if(cumulativeGPA >= 3.8 ){
-                    alert('Your will get Summa Cum Laude!');
+                    alert('Your will get Summa Cum Laude! You sir, are a genius!');
                 }
                 else if(3.79 >= cumulativeGPA && cumulativeGPA >= 3.6){
-                    alert('Your will get Magna Cum Laude!');
+                    alert('Your will get Magna Cum Laude! Keep up and you will become dean lister!');
                 }
                 else if(3.59 >= cumulativeGPA && cumulativeGPA >= 3.4){
-                    alert('Your will get Cum Laude!');
+                    alert('Your will get Cum Laude! Higher employment rate and starting salary awaits you!');
                 }
                 else if(3.39 >= cumulativeGPA && cumulativeGPA >= 3.2){
                     alert('Your will get High Merit!');
