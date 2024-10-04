@@ -1,25 +1,29 @@
 // MY CODES START FROM HERE
 
-// press calculate to run this function: this function will take in the data values from GPA_dictionary
+// press calculate to run this function: this function will take in the data values from GPA_dictionary.json (the GPA_dictionary has the Grade vs Point for the top 5 universities in Singapore with format as such "A+":5.3, ... )
 // based on the univeristy from user input, this function will return the calcualated GPA
 function calculateGPA() {
+    // application of axios knowledge: retreiving data from a json file:
+
     target = './GPA_dictionary.json';
     axios.get(target)
         .then(response => {
-            // retrieve data from the dictionary for each uni's grade : gpa 
+            // retrieved data from the dictionary for each uni's grade : gpa 
             // console.log(response.data); 
             let inputUni = document.getElementById('university').value;
             let displayMsg = document.getElementById('displayMsg');
             let numSelected = document.getElementById('moduleCount').value;
+            // error prevention in case of bug:
             if (!numSelected) {
                 alert('Please select the number of modules you have taken.');
                 return;
             }
             numSelected = parseInt(numSelected);
+            // this will obtain the all element of 'input' with id 'moduleInputs'
             let textFieldsList = document.querySelectorAll('#moduleInputs input');
 
 
-            // for SMU:
+            // calculation for SMU:
             // SMU's cumulative GPA calculation: sum of GPA of all mods divide by number of mods
             if (inputUni == 'smu') {
                 let sum = 0;
@@ -56,13 +60,13 @@ function calculateGPA() {
                 displayMsg = document.getElementById('displayMsg');
                 displayMsg.innerText = "Your cumulative GPA is " + cumulativeGPA + " out of 4.00";
                 if(cumulativeGPA >= 3.8 ){
-                    alert('Your will get Summa Cum Laude! You sir, are a genius!');
+                    alert("Your will get Summa Cum Laude! You sir/ma'am, are a genius!");
                 }
                 else if(3.79 >= cumulativeGPA && cumulativeGPA >= 3.6){
-                    alert('Your will get Magna Cum Laude! Keep up and you will become dean lister!');
+                    alert('Your will get Magna Cum Laude! Keep up and you will become a dean lister!');
                 }
                 else if(3.59 >= cumulativeGPA && cumulativeGPA >= 3.4){
-                    alert('Your will get Cum Laude! Higher employment rate and starting salary awaits you!');
+                    alert('Your will get Cum Laude! Higher employment rate and starting salary await you!');
                 }
                 else if(3.39 >= cumulativeGPA && cumulativeGPA >= 3.2){
                     alert('Your will get High Merit!');
@@ -72,7 +76,8 @@ function calculateGPA() {
                 }
 
             }
-            // for other unis
+
+            // calculation for other unis
             // other uni's cumulative gpa = sum of (grade point * credit) divide by total credits
             else {
                 let totalGPA = 0;
@@ -85,10 +90,13 @@ function calculateGPA() {
                     }
                 }
                 // console.log(uniObj)
-                let i = 0;
-                let j = 1;
-                let m = 0;
+                // textFieldsList will generate [0: mod1, 1: credit1, 2: mod2, 3: credit2 ... ]
+                let i = 0; // i indicates the mod index
+                let j = 1; // j indicates the credit index
+                let m = 0; // m indicates the loop index
                 while (i <= numSelected * 2 && j <= numSelected * 2) {
+                    // OR: while( i <= textFieldsList.length() )
+
                     // ensure user's input is valid first (can be found in the dictionary)
                     let gradeEntered = textFieldsList[i].value.trim().toUpperCase();
                     let creditEntered = textFieldsList[j].value;
