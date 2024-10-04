@@ -122,6 +122,9 @@ function calculateGPA() {
                 }
 
                 let cumulativeGPA = totalGPA / totalCredits;
+                if(cumulativeGPA > 5.0){
+                    cumulativeGPA = 5.0;
+                }
                 cumulativeGPA = cumulativeGPA.toFixed(2);
                 // display the result in the displayMsg div:
                 displayMsg = document.getElementById('displayMsg');
@@ -150,7 +153,7 @@ function generateInputFields() {
     var modInputEle = document.getElementById('moduleInputs');
     modInputEle.replaceChildren();
 
-    // for SMU:
+    // for SMU: (SMU does not really have credit system for its mods, based on personal experience)
     if (schoolSelectd == 'smu') {
         let i = 1;
         while (i <= num_mod) {
@@ -177,7 +180,7 @@ function generateInputFields() {
         }
     }
 
-    // for other unis:
+    // for other unis: (other unis generally have credit system that weigh mods differently)
     else {
         let i = 1;
         while (i <= num_mod) {
