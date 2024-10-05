@@ -10,18 +10,17 @@ function calculateGPA() {
         .then(response => {
             // retrieved data from the dictionary for each uni's grade : gpa 
             // console.log(response.data); 
-            let inputUni = document.getElementById('university').value;
-            let displayMsg = document.getElementById('displayMsg');
-            let numSelected = document.getElementById('moduleCount').value;
+            var inputUni = document.getElementById('university').value;
+            var displayMsg = document.getElementById('displayMsg');
+            var numSelected = document.getElementById('moduleCount').value;
             // error prevention in case of bug:
             if (!numSelected) {
                 alert('Please select the number of modules you have taken.');
                 return;
             }
             numSelected = parseInt(numSelected);
-            // this will obtain the all element of 'input' with id 'moduleInputs'
+            // this will obtain the all elements of 'input' with id 'moduleInputs'
             let textFieldsList = document.querySelectorAll('#moduleInputs input');
-
 
             // calculation for SMU:
             // SMU's cumulative GPA calculation: sum of GPA of all mods divide by number of mods
@@ -56,23 +55,64 @@ function calculateGPA() {
                     cumulativeGPA = 4.0;
                 }
                 cumulativeGPA = cumulativeGPA.toFixed(2);
-                // display the result in the displayMsg div:
-                displayMsg = document.getElementById('displayMsg');
-                displayMsg.innerText = "Your cumulative GPA is " + cumulativeGPA + " out of 4.00";
-                if(cumulativeGPA >= 3.8 ){
-                    alert("Your will get Summa Cum Laude! You sir/ma'am, are a genius!");
+                displayMsg.innerText = "Your cumulative GPA for current semester is " + cumulativeGPA + " out of 4.00";
+
+
+                // calculate overall GPA:
+                var displayMsg1 = document.getElementById('displayMsg1');
+                let pastGPA = document.getElementById('pastGPA').value;
+                if(pastGPA !== "" && !isNaN(parseFloat(pastGPA))){ // this is only for users who key in their past GPA
+                    pastGPA = parseFloat(pastGPA); 
+                    cumulativeGPA = parseFloat(cumulativeGPA);
+                    if(pastGPA > 4 || pastGPA < 0){ // error prevention measure: in case user key in funny value
+                        alert("Please enter a valid value for your past GPA (0 to 4)!");
+                        displayMsg1.innerText = "";
+                        return;
+                    }   
+                    var overallGPA = (pastGPA + cumulativeGPA) / 2;
+                    overallGPA = overallGPA.toFixed(2);
+                    displayMsg1.innerText = "Your overall cumulative GPA will be " + overallGPA;
+                    // system will congraduate user based on their total GPA, should they enter their past GPA
+                    if(overallGPA >= 3.8 ){
+                        alert("Your will get Summa Cum Laude! You sir/ma'am, are a genius!");
+                    }
+                    else if(3.79 >= overallGPA && overallGPA >= 3.7){
+                        alert('Your will get Magna Cum Laude! Owwwww dean lister, time to show off to friends!');
+                    }
+                    else if(3.69 >= overallGPA && overallGPA >= 3.6){
+                        alert('Your will get Magna Cum Laude! Keep up and you will become a dean lister!');
+                    }
+                    else if(3.59 >= overallGPA && overallGPA >= 3.4){
+                        alert('Your will get Cum Laude! Higher employment rate and starting salary await you!');
+                    }
+                    else if(3.39 >= overallGPA && overallGPA >= 3.2){
+                        alert('Your will get High Merit!');
+                    }
+                    else if(3.19 >= overallGPA && overallGPA >= 3.0){
+                        alert('Your will get Merit!');
+                    }
+                    
                 }
-                else if(3.79 >= cumulativeGPA && cumulativeGPA >= 3.6){
-                    alert('Your will get Magna Cum Laude! Keep up and you will become a dean lister!');
-                }
-                else if(3.59 >= cumulativeGPA && cumulativeGPA >= 3.4){
-                    alert('Your will get Cum Laude! Higher employment rate and starting salary await you!');
-                }
-                else if(3.39 >= cumulativeGPA && cumulativeGPA >= 3.2){
-                    alert('Your will get High Merit!');
-                }
-                else if(3.19 >= cumulativeGPA && cumulativeGPA >= 3.0){
-                    alert('Your will get Merit!');
+                // if user does not key in past GPA, then the system will congraduate user based on their current GPA
+                else{
+                    if(cumulativeGPA >= 3.8 ){
+                        alert("Your will get Summa Cum Laude! You sir/ma'am, are a genius!");
+                    }
+                    else if(3.79 >= cumulativeGPA && cumulativeGPA >= 3.7){
+                        alert('Your will get Magna Cum Laude! Owwwww dean lister, time to show off to friends!');
+                    }
+                    else if(3.69 >= cumulativeGPA && cumulativeGPA >= 3.6){
+                        alert('Your will get Magna Cum Laude! Keep up and you will become a dean lister!');
+                    }
+                    else if(3.59 >= cumulativeGPA && cumulativeGPA >= 3.4){
+                        alert('Your will get Cum Laude! Higher employment rate and starting salary await you!');
+                    }
+                    else if(3.39 >= cumulativeGPA && cumulativeGPA >= 3.2){
+                        alert('Your will get High Merit!');
+                    }
+                    else if(3.19 >= cumulativeGPA && cumulativeGPA >= 3.0){
+                        alert('Your will get Merit!');
+                    }
                 }
 
             }
@@ -128,9 +168,27 @@ function calculateGPA() {
                 cumulativeGPA = cumulativeGPA.toFixed(2);
                 // display the result in the displayMsg div:
                 displayMsg = document.getElementById('displayMsg');
-                displayMsg.innerText = "Your cumulative GPA is " + cumulativeGPA + " out of 5.00";
-            }
+                displayMsg.innerText = "Your cumulative GPA for current semester is " + cumulativeGPA + " out of 5.00";
 
+                
+                // calculate overall GPA taking past GPA and current GPA
+                var displayMsg1 = document.getElementById('displayMsg1');
+                let pastGPA = document.getElementById('pastGPA').value;
+                if(pastGPA !== "" && !isNaN(parseFloat(pastGPA))){ // this is only for users who key in their past GPA
+                    pastGPA = parseFloat(pastGPA); 
+                    cumulativeGPA = parseFloat(cumulativeGPA);
+                    if(pastGPA > 5 || pastGPA < 0){ // error prevention measure: in case user key in funny value
+                        alert("Please enter a valid value for your past GPA (0 to 5)!");
+                        displayMsg1.innerText = "";
+                        return;
+                    }   
+                    var overallGPA = (pastGPA + cumulativeGPA) / 2;
+                    overallGPA = overallGPA.toFixed(2);
+                    displayMsg1.innerText = "Your overall cumulative GPA will be " + overallGPA;
+                
+                }
+
+            }
 
         })
         .catch(error => {
@@ -155,6 +213,14 @@ function generateInputFields() {
 
     // for SMU: (SMU does not really have credit system for its mods, based on personal experience)
     if (schoolSelectd == 'smu') {
+        // edit pastGPA field max value (SMU is 4.0):
+        var labelEle_pastGPA = document.getElementById('pastGPA-label');
+        labelEle_pastGPA.style.visibility = 'visible';
+        var pastGPA_field = document.getElementById('pastGPA');
+        pastGPA_field.style.visibility = 'visible';
+        pastGPA_field.max = 4;
+
+        
         let i = 1;
         while (i <= num_mod) {
             let moduleDiv = document.createElement('div');
@@ -182,6 +248,14 @@ function generateInputFields() {
 
     // for other unis: (other unis generally have credit system that weigh mods differently)
     else {
+        // edit pastGPA field max value (SMU is 4.0):
+        var labelEle_pastGPA = document.getElementById('pastGPA-label');
+        labelEle_pastGPA.style.visibility = 'visible';
+        var pastGPA_field = document.getElementById('pastGPA');
+        pastGPA_field.style.visibility = 'visible';
+        pastGPA_field.max = 5;
+
+
         let i = 1;
         while (i <= num_mod) {
             let moduleDiv = document.createElement('div');

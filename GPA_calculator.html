@@ -13,16 +13,13 @@
             .module {
                 margin-bottom: 10px;
             }
-
             #moduleInputs {
                 margin-top: 15px;
             }
-
             .result {
                 margin-top: 20px;
                 font-weight: bold;
             }
-
             .gpa-calculator-container {
                 max-width: 600px;
                 margin: 0 auto;
@@ -33,7 +30,6 @@
                 border-radius: 10px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
-
             .icons{
                 /* make the icons align in a row */
                 display:flex; 
@@ -44,7 +40,6 @@
                 margin-top:10px;
                 margin-bottom: 10px;
             }
-
             h2 {
                 text-align: center;
                 margin-bottom: 20px;
@@ -68,7 +63,7 @@
                 <!-- Div 1: Ask for the number of modules as well as university -->
                 <div id="div1" class="container-fluid">
                 
-                    <label for="university" class="form-label">Select your university: </label>
+                    <label for="university" class="form-label" style="margin-top: 5px;">Select your university: </label>
                     <!-- when user changes the option, it will call the function to refresh the page -->
                     <select id="university" class="form-select" onchange="generateInputFields()">
                         <option value="nus">National University of Singapore</option>
@@ -79,7 +74,7 @@
                     </select>
 
 
-                    <label for="moduleCount" class="form-label">Number of modules taken: </label>
+                    <label for="moduleCount" class="form-label" style="margin-top: 5px;">Number of modules taken: </label>
                     <!-- when user changes the option, it will call the function to refresh the page -->
                      <!-- for value k selected, the function can generate k text fields in the desired div (div3) -->
                     <select id="moduleCount" class="form-select" onchange="generateInputFields()">
@@ -93,6 +88,10 @@
                         <option value="7">7</option>
                         <option value="8">8</option>
                     </select>
+
+                    <!-- for user to enter his past cumulative GPA -->
+                    <label id="pastGPA-label" for="pastGPA" class="form-label" style="visibility:visible;">Enter your past cumulative GPA (optional)</label>
+                    <input type="number" class="form-number" id="pastGPA" style="margin-top: 15px;visibility: hidden;" min=0>
                 </div>
         
 
@@ -104,13 +103,23 @@
 
             <div id="div3" >
                 <div id="moduleInputs">
+
                     <!-- the generated text fields will display here -->
+
                 </div>
                 <button class="btn btn-primary mt-3" onclick="calculateGPA()">Calculate GPA</button>
+                <hr>
+                <!-- cumulative gpa for current sem -->
                 <div>
                     <h6 id="displayMsg" style="font-weight: normal; font-style: italic; color:red"></p>
                 </div>
+                <!-- cumulative gpa for overall -->
+                <div>
+                    <h6 id="displayMsg1" style="font-weight: normal; font-style: italic; color:red"></h6>
+                </div>
             </div>
+
+
         </div>
         
         <script src="./GPA_calculator.js"></script>
