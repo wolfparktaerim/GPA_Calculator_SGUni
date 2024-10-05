@@ -72,7 +72,7 @@ function calculateGPA() {
                     var overallGPA = (pastGPA + cumulativeGPA) / 2;
                     overallGPA = overallGPA.toFixed(2);
                     displayMsg1.innerText = "Your overall cumulative GPA will be " + overallGPA;
-                    // system will congraduate user based on their total GPA, should they enter their past GPA
+                    // system will congratulate user based on their total GPA, should they enter their past GPA
                     if(overallGPA >= 3.8 ){
                         alert("Your will get Summa Cum Laude! You sir/ma'am, are a genius!");
                     }
