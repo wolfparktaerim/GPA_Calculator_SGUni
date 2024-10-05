@@ -93,7 +93,7 @@ function calculateGPA() {
                     }
                     
                 }
-                // if user does not key in past GPA, then the system will congraduate user based on their current GPA
+                // if user does not key in past GPA, then the system will congratulate user based on their current GPA
                 else{
                     if(cumulativeGPA >= 3.8 ){
                         alert("Your will get Summa Cum Laude! You sir/ma'am, are a genius!");
