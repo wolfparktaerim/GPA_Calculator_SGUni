@@ -93,11 +93,13 @@
                     </select>
 
                     <!-- for user to enter his past cumulative GPA -->
-                    <label id="pastGPA-label" for="pastGPA" class="form-label" style="visibility:visible;">Enter your past cumulative GPA (optional)</label>
-                    <input type="number" class="form-number" id="pastGPA" style="margin-top: 15px;visibility: hidden;" min=0>
+                    <label id="pastGPA-label" for="pastGPA" class="form-label" style="visibility:hidden;">Enter your past cumulative GPA (optional)</label>
+                    <input type="number" class="" id="pastGPA" style="margin-top: 15px;visibility: hidden;width:43.5%;" min=0 oninput="showPastNumMods()">
+                    <br>
+                    <label id="pastMods-label" for="pastNumMods" class="form-label" style="display:none">Enter total number of mods taken from the past</label>
+                    <input type="number" class="" id="pastNumMods" style="margin-top: 15px;display:none;" min=0>
                 </div>
         
-
             <hr>
             
             <div id="div2">

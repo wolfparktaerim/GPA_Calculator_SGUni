@@ -61,15 +61,23 @@ function calculateGPA() {
                 // calculate overall GPA:
                 var displayMsg1 = document.getElementById('displayMsg1');
                 let pastGPA = document.getElementById('pastGPA').value;
-                if(pastGPA !== "" && !isNaN(parseFloat(pastGPA))){ // this is only for users who key in their past GPA
+                let pastNumMods = document.getElementById('pastNumMods').value;
+
+                if(pastGPA !== "" && !isNaN(parseFloat(pastGPA)) && pastNumMods != "" && !isNaN(parseFloat(pastGPA))){ // this is only for users who key in their past GPA and past number of mods correctly
                     pastGPA = parseFloat(pastGPA); 
+                    pastNumMods = parseFloat(pastNumMods);
                     cumulativeGPA = parseFloat(cumulativeGPA);
-                    if(pastGPA > 4 || pastGPA < 0){ // error prevention measure: in case user key in funny value
+                    if(pastGPA > 4 || pastGPA < 0){ // error prevention measure: in case user key in funny value for past gpa
                         alert("Please enter a valid value for your past GPA (0 to 4)!");
                         displayMsg1.innerText = "";
                         return;
-                    }   
-                    var overallGPA = (pastGPA + cumulativeGPA) / 2;
+                    }
+                    if(pastNumMods < 0){ // error prevention measure: in case user key in funny value for past num of mods
+                        alert("Please enter a valid value for your past number of modules!");
+                        displayMsg1.innerText = "";
+                        return;
+                    } 
+                    let overallGPA = ((pastGPA * pastNumMods) + cumulativeGPA * numSelected)  /  (numSelected + pastNumMods);
                     overallGPA = overallGPA.toFixed(2);
                     displayMsg1.innerText = "Your overall cumulative GPA will be " + overallGPA;
                     // system will congratulate user based on their total GPA, should they enter their past GPA
@@ -171,18 +179,25 @@ function calculateGPA() {
                 displayMsg.innerText = "Your cumulative GPA for current semester is " + cumulativeGPA + " out of 5.00";
 
                 
-                // calculate overall GPA taking past GPA and current GPA
+                // calculate overall GPA taking past GPA and current GPA:
                 var displayMsg1 = document.getElementById('displayMsg1');
                 let pastGPA = document.getElementById('pastGPA').value;
-                if(pastGPA !== "" && !isNaN(parseFloat(pastGPA))){ // this is only for users who key in their past GPA
+                let pastNumMods = document.getElementById('pastNumMods').value;
+                if(pastGPA !== "" && !isNaN(parseFloat(pastGPA)) && pastNumMods != "" && !isNaN(parseFloat(pastGPA))){ // this is only for users who key in their past GPA and past number of mods correctly
                     pastGPA = parseFloat(pastGPA); 
+                    pastNumMods = parseFloat(pastNumMods);
                     cumulativeGPA = parseFloat(cumulativeGPA);
-                    if(pastGPA > 5 || pastGPA < 0){ // error prevention measure: in case user key in funny value
-                        alert("Please enter a valid value for your past GPA (0 to 5)!");
+                    if(pastGPA > 5 || pastGPA < 0){ // error prevention measure: in case user key in funny value for past gpa
+                        alert("Please enter a valid value for your past GPA (0 to 4)!");
                         displayMsg1.innerText = "";
                         return;
-                    }   
-                    var overallGPA = (pastGPA + cumulativeGPA) / 2;
+                    }
+                    if(pastNumMods < 0){ // error prevention measure: in case user key in funny value for past num of mods
+                        alert("Please enter a valid value for your past number of modules!");
+                        displayMsg1.innerText = "";
+                        return;
+                    }
+                    let overallGPA = ((pastGPA * pastNumMods) + cumulativeGPA * numSelected)  /  (numSelected + pastNumMods);
                     overallGPA = overallGPA.toFixed(2);
                     displayMsg1.innerText = "Your overall cumulative GPA will be " + overallGPA;
                 
@@ -295,6 +310,21 @@ function generateInputFields() {
 
             i++;
         }
+    }
+
+}
+
+function showPastNumMods(){
+    var label_NumMods = document.getElementById('pastMods-label');
+    var pastNumMods = document.getElementById('pastNumMods');
+    var pastGPA = document.getElementById('pastGPA').value;
+    if(pastGPA == ""){
+        label_NumMods.style.display = 'none';
+        pastNumMods.style.display = 'none';
+    }
+    else{
+        label_NumMods.style.display = 'inline';
+        pastNumMods.style.display = 'inline';
     }
 
 }
