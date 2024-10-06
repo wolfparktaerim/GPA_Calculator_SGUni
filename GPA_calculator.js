@@ -72,7 +72,7 @@ function calculateGPA() {
                         displayMsg1.innerText = "";
                         return;
                     }
-                    if(pastNumMods < 0){ // error prevention measure: in case user key in funny value for past num of mods
+                    if(pastNumMods < 0 || pastNumMods > 100){ // error prevention measure: in case user key in funny value for past num of mods
                         alert("Please enter a valid value for your past number of modules!");
                         displayMsg1.innerText = "";
                         return;
@@ -192,7 +192,7 @@ function calculateGPA() {
                         displayMsg1.innerText = "";
                         return;
                     }
-                    if(pastNumMods < 0){ // error prevention measure: in case user key in funny value for past num of mods
+                    if(pastNumMods < 0 || pastNumMods > 100){ // error prevention measure: in case user key in funny value for past num of mods
                         alert("Please enter a valid value for your past number of modules!");
                         displayMsg1.innerText = "";
                         return;
