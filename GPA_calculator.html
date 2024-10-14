@@ -10,6 +10,9 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         
         <style>
+            body {
+                overflow-x: hidden;
+            }
             .module {
                 margin-bottom: 10px;
             }
@@ -21,10 +24,8 @@
                 font-weight: bold;
             }
             .gpa-calculator-container {
-                max-width: 600px;
-                margin: 0 auto;
-                /* ensure the width is not too small for view */
-                min-width: 40vw;
+                width: 80vw; /* Full viewport width */
+                height: auto;
                 padding: 20px;
                 background-color: #f8f9fa;
                 border-radius: 10px;
@@ -62,13 +63,25 @@
                 display:none;
             }
 
+            @media (max-width: 600px) {
+                #fixedCalculateBtn {
+                    right: 10px;
+                    bottom: 50px;
+                }
+            }
+            @media (min-width: 992px) {  /* 992px is typically for large screens like laptops or bigger */
+                .gpa-calculator-container {
+                    width: 45vw; 
+                    margin: auto; /* Center the container */
+                }
+            }
 
         </style>
     </head>
 
     <body>
         <div>
-            <div class="gpa-calculator-container container-fluid ">
+            <div class="gpa-calculator-container container-fluid mt-1">
                 <h2 class="text-center mb-4">GPA Calculator</h2>
                 <div class="icons">
                     <img src="./icons/nus.png" height="30px">
@@ -105,13 +118,13 @@
                         </select>
                     </div>
     
-                    <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="col-lg-6 col-md-6 col-sm-6 mb-1">
                         <label id="pastGPA-label" for="pastGPA" class="form-label">Enter your past cumulative GPA (optional)</label>
                         <input type="number" class="form-control" id="pastGPA" min=0 oninput="showPastNumMods()">
                     </div>
     
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <label id="pastMods-label" for="pastNumMods" class="form-label" style="display:none">Enter total number of mods taken from the past</label>
+                    <div class="col-lg-6 col-md-6 col-sm-6 mb-6">
+                        <label id="pastMods-label" for="pastNumMods" class="form-label" style="display:none">Enter total number of mods taken before</label>
                         <input type="number" class="form-control" id="pastNumMods" min=0 style="display:none;">
                     </div>
                 </div>
@@ -126,9 +139,11 @@
                     <div id="moduleInputs">
                         <!-- The generated text fields will display here -->
                     </div>
+
                     <!-- <div class="mt-4 mb-4">
                         <button class="btn btn-primary col-lg-12 col-md-12 col-sm-4" onclick="calculateGPA()">Calculate GPA</button>
                     </div> -->
+
                     <hr>
                     <!-- Cumulative GPA for current sem -->
                     <div>

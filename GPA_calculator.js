@@ -236,7 +236,6 @@ function generateInputFields() {
         pastGPA_field.style.visibility = 'visible';
         pastGPA_field.max = 4;
 
-        
         let i = 1;
         while (i <= num_mod) {
             let moduleDiv = document.createElement('div');
@@ -309,7 +308,6 @@ function generateInputFields() {
             input2.classList.add('form-control');
             input2.placeholder = '2, 3, 4, etc.';
             
-
             moduleDiv.appendChild(label1);
             moduleDiv.appendChild(input1);
             moduleDiv.appendChild(label2);
@@ -331,8 +329,8 @@ function showPastNumMods(){
         pastNumMods.style.display = 'none';
     }
     else{
-        label_NumMods.style.display = 'inline';
-        pastNumMods.style.display = 'inline';
+        label_NumMods.style.display = 'block';
+        pastNumMods.style.display = 'block';
     }
 
 }
@@ -340,7 +338,7 @@ function showPastNumMods(){
 
 window.onscroll = function () {
     var backToTopBtn = document.getElementById('backToTopBtn');
-    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+    if (document.body.scrollTop > 70 || document.documentElement.scrollTop > 70) {
         backToTopBtn.style.display = 'block';
     } else {
         backToTopBtn.style.display = 'none';
