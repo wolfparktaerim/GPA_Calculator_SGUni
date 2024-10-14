@@ -51,11 +51,8 @@ function calculateGPA() {
                 }
 
                 let cumulativeGPA = sum / numSelected;
-                if (cumulativeGPA > 4.0) {
-                    cumulativeGPA = 4.0;
-                }
                 cumulativeGPA = cumulativeGPA.toFixed(2);
-                displayMsg.innerText = "Your cumulative GPA for current semester is " + cumulativeGPA + " out of 4.00";
+                displayMsg.innerText = "Your cumulative GPA for current semester is " + cumulativeGPA;
 
 
                 // calculate overall GPA:
@@ -67,8 +64,8 @@ function calculateGPA() {
                     pastGPA = parseFloat(pastGPA); 
                     pastNumMods = parseFloat(pastNumMods);
                     cumulativeGPA = parseFloat(cumulativeGPA);
-                    if(pastGPA > 4 || pastGPA < 0){ // error prevention measure: in case user key in funny value for past gpa
-                        alert("Please enter a valid value for your past GPA (0 to 4)!");
+                    if(pastGPA > 4.3 || pastGPA < 0){ // error prevention measure: in case user key in funny value for past gpa
+                        alert("Please enter a valid value for your past GPA (0 to 4.3)!");
                         displayMsg1.innerText = "";
                         return;
                     }
@@ -124,6 +121,83 @@ function calculateGPA() {
                 }
 
             }
+            // calculation for sutd:
+            else if (inputUni == 'sutd') {
+                let totalGPA = 0;
+                let totalCredits = 0;
+                var uniDicts = response.data;
+                let uniObj = uniDicts[0];
+                for (dict of uniDicts) {
+                    if (dict.hasOwnProperty(inputUni)) {
+                        uniObj = dict[inputUni];
+                    }
+                }
+                // console.log(uniObj)
+                // textFieldsList will generate [0: mod1, 1: credit1, 2: mod2, 3: credit2 ... ]
+                let i = 0; // i indicates the mod index
+                let j = 1; // j indicates the credit index
+                let m = 0; // m indicates the loop index
+                while (i <= numSelected * 2 && j <= numSelected * 2) {
+                    // OR: while( i <= textFieldsList.length() )
+
+                    // ensure user's input is valid first (can be found in the dictionary)
+                    let gradeEntered = textFieldsList[i].value.trim().toUpperCase();
+                    let creditEntered = textFieldsList[j].value;
+                    if (typeof gradeEntered == "string" && uniObj.hasOwnProperty(gradeEntered)) {
+                        let thisGPA = uniObj[gradeEntered];
+                        creditEntered = parseFloat(creditEntered);
+                        if (creditEntered < 10 && creditEntered > 0) {
+                            totalCredits += creditEntered;
+                            totalGPA += creditEntered * thisGPA;
+                        }
+                        else {
+                            alert('Please ensure the credit entered for module ' + (parseInt(m) + 1) + " is valid! Your credit entered for the mod is either too large or too small!");
+                            return;
+                        }
+                    }
+                    else {
+                        alert('Please ensure the grade entered for module ' + (parseInt(i) + 1) + " is valid!");
+                        return;
+                    }
+                    m ++;
+                    i += 2;
+                    j += 2;
+                }
+
+                let cumulativeGPA = totalGPA / totalCredits;
+                cumulativeGPA = cumulativeGPA.toFixed(2);
+                // display the result in the displayMsg div:
+                displayMsg = document.getElementById('displayMsg');
+                displayMsg.innerText = "Your cumulative GPA for current semester is " + cumulativeGPA ;
+
+                
+                // calculate overall GPA taking past GPA and current GPA:
+                var displayMsg1 = document.getElementById('displayMsg1');
+                displayMsg1.scrollIntoView({ behavior: 'smooth' });
+                let pastGPA = document.getElementById('pastGPA').value;
+                let pastNumMods = document.getElementById('pastNumMods').value;
+                if(pastGPA !== "" && !isNaN(parseFloat(pastGPA)) && pastNumMods != "" && !isNaN(parseFloat(pastGPA))){ // this is only for users who key in their past GPA and past number of mods correctly
+                    pastGPA = parseFloat(pastGPA); 
+                    pastNumMods = parseFloat(pastNumMods);
+                    cumulativeGPA = parseFloat(cumulativeGPA);
+                    if(pastGPA > 5.3 || pastGPA < 0){ // error prevention measure: in case user key in funny value for past gpa
+                        alert("Please enter a valid value for your past GPA (0 to 5.3)!");
+                        displayMsg1.innerText = "";
+                        return;
+                    }
+                    if(pastNumMods < 0 || pastNumMods > 100){ // error prevention measure: in case user key in funny value for past num of mods
+                        alert("Please enter a valid value for your past number of modules!");
+                        displayMsg1.innerText = "";
+                        return;
+                    }
+                    let overallGPA = ((pastGPA * pastNumMods) + cumulativeGPA * numSelected)  /  (numSelected + pastNumMods);
+                    overallGPA = overallGPA.toFixed(2);
+                    displayMsg1.innerText = "Your overall cumulative GPA will be " + overallGPA;
+                
+                }
+            }
+
+
 
             // calculation for other unis
             // other uni's cumulative gpa = sum of (grade point * credit) divide by total credits
@@ -170,13 +244,11 @@ function calculateGPA() {
                 }
 
                 let cumulativeGPA = totalGPA / totalCredits;
-                if(cumulativeGPA > 5.0){
-                    cumulativeGPA = 5.0;
-                }
+
                 cumulativeGPA = cumulativeGPA.toFixed(2);
                 // display the result in the displayMsg div:
                 displayMsg = document.getElementById('displayMsg');
-                displayMsg.innerText = "Your cumulative GPA for current semester is " + cumulativeGPA + " out of 5.00";
+                displayMsg.innerText = "Your cumulative GPA for current semester is " + cumulativeGPA ;
 
                 
                 // calculate overall GPA taking past GPA and current GPA:
@@ -189,7 +261,7 @@ function calculateGPA() {
                     pastNumMods = parseFloat(pastNumMods);
                     cumulativeGPA = parseFloat(cumulativeGPA);
                     if(pastGPA > 5 || pastGPA < 0){ // error prevention measure: in case user key in funny value for past gpa
-                        alert("Please enter a valid value for your past GPA (0 to 4)!");
+                        alert("Please enter a valid value for your past GPA (0 to 5)!");
                         displayMsg1.innerText = "";
                         return;
                     }
@@ -349,6 +421,15 @@ function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+window.addEventListener('resize', function() {
+    const calculateBtn = document.getElementById('fixedCalculateBtn');
+    if (window.innerWidth <= 600) {
+        calculateBtn.style.display = 'none';
+    } 
+    else{
+        calculateBtn.style.display = 'block';
+    }
+});
 
 // generate input fields when loaded
 window.onload = generateInputFields;
