@@ -301,12 +301,12 @@ function generateInputFields() {
 
     // for SMU: (SMU does not really have credit system for its mods, based on personal experience)
     if (schoolSelectd == 'smu') {
-        // edit pastGPA field max value (SMU is 4.0):
+        // edit pastGPA field max value (SMU is 4.3):
         var labelEle_pastGPA = document.getElementById('pastGPA-label');
         labelEle_pastGPA.style.visibility = 'visible';
         var pastGPA_field = document.getElementById('pastGPA');
         pastGPA_field.style.visibility = 'visible';
-        pastGPA_field.max = 4;
+        pastGPA_field.max = 4.3;
 
         let i = 1;
         while (i <= num_mod) {
@@ -334,10 +334,64 @@ function generateInputFields() {
             i++;
         }
     }
+    // for SUTD:
+    else if(schoolSelectd == 'sutd'){
+        // edit pastGPA field max value (SUTD is 5.3):
+        var labelEle_pastGPA = document.getElementById('pastGPA-label');
+        labelEle_pastGPA.style.visibility = 'visible';
+        var pastGPA_field = document.getElementById('pastGPA');
+        pastGPA_field.style.visibility = 'visible';
+        pastGPA_field.max = 5.3;
+
+
+        let i = 1;
+        while (i <= num_mod) {
+            let moduleDiv = document.createElement('div');
+            moduleDiv.classList.add('module');
+
+            let label1 = document.createElement('label');
+            label1.textContent = 'Enter grade for module ' + i + ': ';
+
+            let input1 = document.createElement('input');
+            input1.type = 'text';
+            input1.id = 'grade' + i;
+            input1.style.display = "inline";
+            input1.style.marginLeft = '12px';
+            input1.style.width = '65%';
+            input1.setAttribute('required', true);
+            input1.classList.add('form-control');
+            input1.placeholder = 'A+, B, C-, etc (can be lowercase)';
+
+            moduleDiv.appendChild(label1);
+            moduleDiv.appendChild(input1);
+            modInputEle.appendChild(moduleDiv);
+
+            // beside the grade of each mod, SUTD must take consideration of credit worth of each mod
+            let label2 = document.createElement('label');
+            label2.textContent = 'Enter credit for module ' + i + ': ';
+            let input2 = document.createElement('input');
+            input2.type = 'number';
+            input2.id = 'credit' + i;
+            input2.style.display = "inline";
+            input2.style.marginLeft = '12px';
+            input2.style.width = '65%';
+            input2.setAttribute('required', true);
+            input2.classList.add('form-control');
+            input2.placeholder = '2, 3, 4, etc.';
+            
+            moduleDiv.appendChild(label1);
+            moduleDiv.appendChild(input1);
+            moduleDiv.appendChild(label2);
+            moduleDiv.appendChild(input2);
+            modInputEle.appendChild(moduleDiv);
+
+            i++;
+        }
+    }
 
     // for other unis: (other unis generally have credit system that weigh mods differently)
     else {
-        // edit pastGPA field max value (SMU is 4.0):
+        // edit pastGPA field max value (other unis is 5.0):
         var labelEle_pastGPA = document.getElementById('pastGPA-label');
         labelEle_pastGPA.style.visibility = 'visible';
         var pastGPA_field = document.getElementById('pastGPA');
