@@ -48,83 +48,105 @@
             h4{
                 text-align: center;
             }
+
+            /* Fixed position for the "Calculate GPA" button */
+            #fixedCalculateBtn {
+                position: fixed;
+                right: 20px;  /* Align to the side */
+                bottom: 100px; /* Keep above the bottom */
+                width: 100px;  /* Make it smaller */
+                height:auto;
+            }
+
+            #backToTopBtn{
+                display:none;
+            }
+
+
         </style>
     </head>
 
     <body>
         <div>
-            <div class="gpa-calculator-container">
-                <h2>GPA Calculator</h2>
+            <div class="gpa-calculator-container container-fluid ">
+                <h2 class="text-center mb-4">GPA Calculator</h2>
                 <div class="icons">
-                    <img src="./icons/nus.png" height="30px" >
-                    <img src="./icons/ntu.png" height="30px" >
-                    <img src="./icons/smu.png" height="30px" >
-                    <img src="./icons/sit.png" height="30px" >
-                    <img src="./icons/sutd.png" height="30px" >
+                    <img src="./icons/nus.png" height="30px">
+                    <img src="./icons/ntu.png" height="30px">
+                    <img src="./icons/smu.png" height="30px">
+                    <img src="./icons/sit.png" height="30px">
+                    <img src="./icons/sutd.png" height="30px">
                 </div>
-                
+    
                 <!-- Div 1: Ask for the number of modules as well as university -->
-                <div id="div1" class="container-fluid">
-                
-                    <label for="university" class="form-label" style="margin-top: 5px;">Select your university: </label>
-                    <!-- when user changes the option, it will call the function to refresh the page -->
-                    <select id="university" class="form-select" onchange="generateInputFields()">
-                        <option value="nus">National University of Singapore</option>
-                        <option value="ntu">Nanyang Technological University</option>
-                        <option value="smu" selected>Singapore Management University</option>
-                        <option value="sit">Singapore Institute of Technology</option>
-                        <option value="sutd">Singapore University of Technology and Design</option>
-                    </select>
-
-
-                    <label for="moduleCount" class="form-label" style="margin-top: 5px;">Number of modules taken: </label>
-                    <!-- when user changes the option, it will call the function to refresh the page -->
-                     <!-- for value k selected, the function can generate k text fields in the desired div (div3) -->
-                    <select id="moduleCount" class="form-select" onchange="generateInputFields()">
-                        <!-- Options from 1 to 8 -->
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4" selected>4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                    </select>
-
-                    <!-- for user to enter his past cumulative GPA -->
-                    <label id="pastGPA-label" for="pastGPA" class="form-label" style="visibility:hidden;">Enter your past cumulative GPA (optional)</label>
-                    <input type="number" class="" id="pastGPA" style="margin-top: 15px;visibility: hidden;width:43.5%;" min=0 oninput="showPastNumMods()">
-                    <br>
-                    <label id="pastMods-label" for="pastNumMods" class="form-label" style="display:none">Enter total number of mods taken from the past</label>
-                    <input type="number" class="" id="pastNumMods" style="margin-top: 15px;display:none;" min=0>
+                <div id="div1" class="row">
+                    <div class="mb-2 col-lg-6 col-md-12 col-sm-12">
+                        <label for="university" class="form-label">Select your university: </label>
+                        <select id="university" class="form-select" onchange="generateInputFields()">
+                            <option value="nus">National University of Singapore</option>
+                            <option value="ntu">Nanyang Technological University</option>
+                            <option value="smu" selected>Singapore Management University</option>
+                            <option value="sit">Singapore Institute of Technology</option>
+                            <option value="sutd">Singapore University of Technology and Design</option>
+                        </select>
+                    </div>
+    
+                    <div class="mb-2 col-lg-6 col-md-12 col-sm-12">
+                        <label for="moduleCount" class="form-label">Number of modules taken: </label>
+                        <select id="moduleCount" class="form-select" onchange="generateInputFields()">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4" selected>4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
+                    </div>
+    
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <label id="pastGPA-label" for="pastGPA" class="form-label">Enter your past cumulative GPA (optional)</label>
+                        <input type="number" class="form-control" id="pastGPA" min=0 oninput="showPastNumMods()">
+                    </div>
+    
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <label id="pastMods-label" for="pastNumMods" class="form-label" style="display:none">Enter total number of mods taken from the past</label>
+                        <input type="number" class="form-control" id="pastNumMods" min=0 style="display:none;">
+                    </div>
                 </div>
-        
-            <hr>
-            
-            <div id="div2">
-                <h4>Please Enter Your Grades for Every Module </h4>
-            </div>
-
-            <div id="div3" >
-                <div id="moduleInputs">
-
-                    <!-- the generated text fields will display here -->
-
-                </div>
-                <button class="btn btn-primary mt-3" onclick="calculateGPA()">Calculate GPA</button>
+    
                 <hr>
-                <!-- cumulative gpa for current sem -->
-                <div>
-                    <h6 id="displayMsg" style="font-weight: normal; font-style: italic; color:red"></p>
+    
+                <div id="div2">
+                    <h4>Please Enter Your Grades for Every Module</h4>
                 </div>
-                <!-- cumulative gpa for overall -->
-                <div>
-                    <h6 id="displayMsg1" style="font-weight: normal; font-style: italic; color:red"></h6>
+    
+                <div id="div3" class="row">
+                    <div id="moduleInputs">
+                        <!-- The generated text fields will display here -->
+                    </div>
+                    <!-- <div class="mt-4 mb-4">
+                        <button class="btn btn-primary col-lg-12 col-md-12 col-sm-4" onclick="calculateGPA()">Calculate GPA</button>
+                    </div> -->
+                    <hr>
+                    <!-- Cumulative GPA for current sem -->
+                    <div>
+                        <h6 id="displayMsg" style="font-weight: normal; font-style: italic; color:red"></h6>
+                    </div>
+    
+                    <!-- Cumulative GPA for overall -->
+                    <div>
+                        <h6 id="displayMsg1" style="font-weight: normal; font-style: italic; color:red"></h6>
+                    </div>
+
+                    <!-- Calculate GPA button, fixed while scrolling -->
+                    <button id="fixedCalculateBtn" class="btn btn-primary" onclick="calculateGPA()">Calculate GPA</button>
+
+                    <!-- Back to Top button -->
+                    <button id="backToTopBtn" class="btn btn-secondary" onclick="scrollToTop()">Go to Top</button>
                 </div>
             </div>
-
-
         </div>
         
         <script src="./GPA_calculator.js"></script>

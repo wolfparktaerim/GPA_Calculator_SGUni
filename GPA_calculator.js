@@ -62,7 +62,7 @@ function calculateGPA() {
                 var displayMsg1 = document.getElementById('displayMsg1');
                 let pastGPA = document.getElementById('pastGPA').value;
                 let pastNumMods = document.getElementById('pastNumMods').value;
-
+                displayMsg1.scrollIntoView({ behavior: 'smooth' });
                 if(pastGPA !== "" && !isNaN(parseFloat(pastGPA)) && pastNumMods != "" && !isNaN(parseFloat(pastGPA))){ // this is only for users who key in their past GPA and past number of mods correctly
                     pastGPA = parseFloat(pastGPA); 
                     pastNumMods = parseFloat(pastNumMods);
@@ -181,6 +181,7 @@ function calculateGPA() {
                 
                 // calculate overall GPA taking past GPA and current GPA:
                 var displayMsg1 = document.getElementById('displayMsg1');
+                displayMsg1.scrollIntoView({ behavior: 'smooth' });
                 let pastGPA = document.getElementById('pastGPA').value;
                 let pastNumMods = document.getElementById('pastNumMods').value;
                 if(pastGPA !== "" && !isNaN(parseFloat(pastGPA)) && pastNumMods != "" && !isNaN(parseFloat(pastGPA))){ // this is only for users who key in their past GPA and past number of mods correctly
@@ -248,11 +249,13 @@ function generateInputFields() {
             let input = document.createElement('input');
             input.type = 'text';
             input.id = 'grade' + i;
-            input.style.maxWidth = "25%";
             input.style.display = "inline";
+            input.style.marginLeft = '12px';
+            input.style.width = '65%';
+            input.style.maxWidth = '100%';
             input.setAttribute('required', true);
             input.classList.add('form-control');
-            input.placeholder = 'A+, B, C-, etc.';
+            input.placeholder = 'A+, B, C-, etc (can be lowercase)';
 
             moduleDiv.appendChild(label);
             moduleDiv.appendChild(input);
@@ -282,11 +285,16 @@ function generateInputFields() {
             let input1 = document.createElement('input');
             input1.type = 'text';
             input1.id = 'grade' + i;
-            input1.style.maxWidth = "25%";
             input1.style.display = "inline";
+            input1.style.marginLeft = '12px';
+            input1.style.width = '65%';
             input1.setAttribute('required', true);
             input1.classList.add('form-control');
-            input1.placeholder = 'A+, B, C-, etc.';
+            input1.placeholder = 'A+, B, C-, etc (can be lowercase)';
+
+            moduleDiv.appendChild(label1);
+            moduleDiv.appendChild(input1);
+            modInputEle.appendChild(moduleDiv);
 
             // beside the grade of each mod, other unis must take consideration of credit worth of each mod
             let label2 = document.createElement('label');
@@ -294,8 +302,9 @@ function generateInputFields() {
             let input2 = document.createElement('input');
             input2.type = 'number';
             input2.id = 'credit' + i;
-            input2.style.maxWidth = "25%";
             input2.style.display = "inline";
+            input2.style.marginLeft = '12px';
+            input2.style.width = '65%';
             input2.setAttribute('required', true);
             input2.classList.add('form-control');
             input2.placeholder = '2, 3, 4, etc.';
@@ -303,7 +312,6 @@ function generateInputFields() {
 
             moduleDiv.appendChild(label1);
             moduleDiv.appendChild(input1);
-            moduleDiv.appendChild(document.createElement('br'))
             moduleDiv.appendChild(label2);
             moduleDiv.appendChild(input2);
             modInputEle.appendChild(moduleDiv);
@@ -328,6 +336,21 @@ function showPastNumMods(){
     }
 
 }
+
+
+window.onscroll = function () {
+    var backToTopBtn = document.getElementById('backToTopBtn');
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        backToTopBtn.style.display = 'block';
+    } else {
+        backToTopBtn.style.display = 'none';
+    }
+};
+// Scroll to top when the "Back to Top" button is clicked
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 
 // generate input fields when loaded
 window.onload = generateInputFields;
