@@ -12,6 +12,8 @@ function calculateGPA() {
             // console.log(response.data); 
             var inputUni = document.getElementById('university').value;
             var displayMsg = document.getElementById('displayMsg');
+            var displayMsg1 = document.getElementById('displayMsg1');
+            displayMsg1.innerText = '';
             var numSelected = document.getElementById('moduleCount').value;
             // error prevention in case of bug:
             if (!numSelected) {
@@ -56,7 +58,6 @@ function calculateGPA() {
 
 
                 // calculate overall GPA:
-                var displayMsg1 = document.getElementById('displayMsg1');
                 let pastGPA = document.getElementById('pastGPA').value;
                 let pastNumMods = document.getElementById('pastNumMods').value;
                 displayMsg1.scrollIntoView({ behavior: 'smooth' });
@@ -450,6 +451,8 @@ function showPastNumMods(){
     var label_NumMods = document.getElementById('pastMods-label');
     var pastNumMods = document.getElementById('pastNumMods');
     var pastGPA = document.getElementById('pastGPA').value;
+    var displayMsg1 = document.getElementById('displayMsg1');
+    displayMsg1.innerText = '';
     if(pastGPA == ""){
         label_NumMods.style.display = 'none';
         pastNumMods.style.display = 'none';
