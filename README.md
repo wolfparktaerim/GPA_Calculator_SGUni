@@ -39,13 +39,13 @@ cd GPA_Calculator_SGUni
 2. Open the `index.html` file in your web browser:
 ```sh
 # On Mac
-open index.html
+open GPA_calculator.html
 
 # On Windows
-start index.html
+start GPA_calculator.html
 
 # On Linux
-xdg-open index.html
+xdg-open GPA_calculator.html
 ```
 
 
