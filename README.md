@@ -32,8 +32,8 @@ Since this is a simple frontend application with no build process, you can run i
 
 1. Clone the repository:
 ```sh
-git clone https://github.com/your-username/sg-gpa-calculator.git
-cd sg-gpa-calculator
+git clone https://github.com/wolfparktaerim/GPA_Calculator_SGUni.git
+cd GPA_Calculator_SGUni
 ```
 
 2. Open the `index.html` file in your web browser:
